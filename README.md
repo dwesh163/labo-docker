@@ -15,8 +15,7 @@ docker-compose up
 5. Une fois les conteneurs démarrés, accédez à l'application via l'URL suivante :  
 http://localhost:<port>  
 # Architecture de l'application :  
-
-# Bases de données :  
+Bases de données :  
 1. Dev :  
    - Permet de modifier et tester le front-end.  
    - Connectée à une base de données dédiée au développement.  
@@ -24,8 +23,7 @@ http://localhost:<port>
 2. Prod :  
    - Image construite à l’aide du Dockerfile.  
    - Utilisée pour le déploiement final.  
-
-# Docker :  
+Docker :  
  - Dev : Configuré pour le développement avec des volumes pour des modifications en temps réel.  
  - Prod : Génère une image stable pour le déploiement.  
 # Les deux environnements choisis :  
