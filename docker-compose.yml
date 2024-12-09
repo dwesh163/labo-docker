@@ -1,0 +1,38 @@
+# Use postgres/example user/password credentials
+version: "3.9"
+services:
+  db:
+    image: postgres:latest
+    shm_size: 128mb
+    volumes:
+      - "./db-dev-data:/var/lib/postgresql/data"
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: home-botany
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d home-botany"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postg-rest:
+    image: postgrest/postgrest:v12.0.3
+    volumes:
+      - "./postgrest.conf:/etc/postgrest.conf"
+    ports:
+      - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["postgrest", "/etc/postgrest.conf"]
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+
