@@ -1,5 +1,5 @@
 # Module_347_Labo2  
-Ce projet permet de lister les plantes pour savoir celles que l'on possède.  
+Cette app permet de lister les plantes pour savoir celles que l'on possède.  
 
 # Instructions d'installation et d'exécution :  
 1. Assurez-vous d'avoir Docker installé sur votre machine.  
