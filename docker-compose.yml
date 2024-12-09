@@ -17,6 +17,17 @@ services:
       timeout: 5s
       retries: 5
 
+  postg-rest:
+    image: postgrest/postgrest:v12.0.3
+    volumes:
+      - "./postgrest.conf:/etc/postgrest.conf"
+    ports:
+      - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["postgrest", "/etc/postgrest.conf"]
+
   adminer:
     image: adminer
     ports:
