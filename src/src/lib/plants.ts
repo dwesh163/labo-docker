@@ -58,3 +58,44 @@ export async function getPlants(): Promise<Plant[]> {
 		return [];
 	}
 }
+
+export async function createPlant(plant: Plant): Promise<ErrorType> {
+	try {
+		const response = await fetch('http://postg-rest:3000/rpc/add_plant', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				_name: plant.name,
+				_species: plant.species,
+				_position_in_house: plant.location,
+				_birthdate: plant.birthdate,
+				_image_url: plant.image,
+				_weekly_hydration: plant.weeklyHydration,
+				_commentary: plant.commentary,
+			}),
+		});
+
+		if (!response.ok) {
+			const data = await response.json();
+			console.error('Error creating plant:', data);
+
+			return {
+				error: 'Server error',
+				status: response.status,
+			};
+		}
+
+		return {
+			error: '',
+			status: 201,
+		};
+	} catch (error) {
+		console.error('Network or other error:', error);
+		return {
+			error: 'Server error',
+			status: 500,
+		};
+	}
+}
