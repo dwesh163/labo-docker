@@ -1,6 +1,17 @@
 import { z } from 'zod';
 
 export interface Plant {
+	name: string;
+	species: string;
+	image: string;
+	location: string;
+	birthdate: string;
+	commentary?: string;
+	category: string;
+	weeklyHydration: number;
+	healthStatus?: 'good' | 'bad' | 'ugly' | 'dead';
+}
+
 export const plantSchema = z.object({
 	name: z.string().min(1, 'Name is required'),
 	species: z.string().min(1, 'Species is required'),
