@@ -8,19 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { z } from 'zod';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-
-const plantSchema = z.object({
-	name: z.string().min(1, 'Name is required'),
-	species: z.string().min(1, 'Species is required'),
-	location: z.string().min(1, 'Location is required'),
-	image: z.string().url(),
-	birthdate: z.string().min(1, 'Birthdate is required'),
-	category: z.string().min(1, 'Category is required'),
-	weeklyHydration: z.string().min(1, 'Weekly Hydration is required'),
-	commentary: z.string().optional(),
-});
-
-type PlantFormValues = z.infer<typeof plantSchema>;
+import { PlantFormValues, plantSchema } from '@/types/plant';
 
 export function CreatePlantDialog({ categories }: { onCreate: (plant: PlantFormValues) => void; categories: string[] }) {
 	const [isOpen, setIsOpen] = useState(false);
