@@ -26,7 +26,7 @@ export function CreatePlantDialog({ categories }: { onCreate: (plant: PlantFormV
 			image: '',
 			birthdate: '',
 			category: '',
-			weeklyHydration: '',
+			weeklyHydration: 1,
 			commentary: '',
 		},
 	});
@@ -144,7 +144,7 @@ export function CreatePlantDialog({ categories }: { onCreate: (plant: PlantFormV
 						control={control}
 						render={({ field }) => (
 							<div>
-								<Input type="number" placeholder="Weekly Hydration (ml)" {...field} />
+								<Input type="number" min={1} placeholder="Weekly Hydration" value={field.value || 1} onChange={(e) => field.onChange(e.target.value ? parseFloat(e.target.value) : 1)} />
 								{errors.weeklyHydration && <p className="text-red-500 mt-1 text-sm">{errors.weeklyHydration.message}</p>}
 							</div>
 						)}
