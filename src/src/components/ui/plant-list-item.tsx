@@ -23,7 +23,7 @@ export function PlantListItem({ plant }: PlantListItemProps) {
 				<div className="space-y-2">
 					<div className="flex items-center gap-2">
 						<h3 className="font-semibold">{plant.name}</h3>
-						<Badge className={`category-badge-${plant.category}`}>{plant.category}</Badge>
+						<Badge className={`category-badge-${plant.species}`}>{plant.species}</Badge>
 					</div>
 					<p className="text-sm text-muted-foreground">{plant.species}</p>
 					<div className="flex items-center gap-4">
@@ -33,14 +33,8 @@ export function PlantListItem({ plant }: PlantListItemProps) {
 						</div>
 						<div className="flex items-center gap-2 text-sm">
 							<Droplet className="h-4 w-4 text-primary" />
-							<span>{plant.wateringFrequency}</span>
+							<span>{plant.weeklyHydration}</span>
 						</div>
-						{plant.lastWatered && (
-							<div className="flex items-center gap-2 text-sm">
-								<Calendar className="h-4 w-4 text-primary" />
-								<span>{format(new Date(plant.lastWatered), 'PP')}</span>
-							</div>
-						)}
 					</div>
 				</div>
 				<DropdownMenu>
