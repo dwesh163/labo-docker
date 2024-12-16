@@ -19,7 +19,7 @@ export const plantSchema = z.object({
 	location: z.string().min(1, 'Location is required'),
 	image: z.string().url(),
 	birthdate: z.string().min(1, 'Birthdate is required'),
-	category: z.string().min(1, 'Category is required'),
+	category: z.string().min(1, 'Category is required').max(100, 'Category is too long'),
 	weeklyHydration: z.number().min(1, 'Weekly Hydration is required'),
 	commentary: z.string().optional(),
 });
