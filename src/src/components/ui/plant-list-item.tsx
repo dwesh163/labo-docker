@@ -23,9 +23,9 @@ export function PlantListItem({ plant }: PlantListItemProps) {
 				<div className="space-y-2">
 					<div className="flex items-center gap-2">
 						<h3 className="font-semibold">{plant.name}</h3>
-						<Badge className={`category-badge-${plant.species}`}>{plant.species}</Badge>
+						<Badge className={`category-badge-${plant.category}`}>{plant.category}</Badge>
 					</div>
-					<p className="text-sm text-muted-foreground">{plant.category}</p>
+					<p className="text-sm text-muted-foreground">{plant.species}</p>
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-2 text-sm">
 							<MapPin className="h-4 w-4 text-primary" />
