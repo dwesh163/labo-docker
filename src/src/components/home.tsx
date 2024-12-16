@@ -41,7 +41,7 @@ export default function HomePage({ plants, plantCategories }: { plants: Plant[];
 					<div className="w-full sm:w-72">
 						<Search value={searchQuery} onChange={setSearchQuery} />
 					</div>
-					<CreatePlantDialog onCreate={(plant) => console.log(plant)} categories={plantCategories.map((category) => category.name)} />
+					<CreatePlantDialog categoriesData={plantCategories.map((category) => category.name)} />
 				</div>
 
 				<PlantCategories plantCategories={plantCategories} selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />

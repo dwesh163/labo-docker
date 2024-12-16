@@ -10,8 +10,14 @@ import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { PlantFormValues, plantSchema } from '@/types/plant';
 
-export function CreatePlantDialog({ categories }: { onCreate: (plant: PlantFormValues) => void; categories: string[] }) {
+export function CreatePlantDialog({ categoriesData }: { categoriesData: string[] }) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [newCategory, setNewCategory] = useState({
+		name: '',
+		error: '',
+		isOpen: false,
+	});
+	const [categories, setCategories] = useState(categoriesData);
 	const {
 		control,
 		handleSubmit,
@@ -117,27 +123,75 @@ export function CreatePlantDialog({ categories }: { onCreate: (plant: PlantFormV
 						)}
 					/>
 
-					<Controller
-						name="category"
-						control={control}
-						render={({ field }) => (
-							<div>
-								<Select value={field.value} onValueChange={field.onChange}>
-									<SelectTrigger>
-										<SelectValue placeholder="Select Category" />
-									</SelectTrigger>
-									<SelectContent>
-										{categories.map((cat) => (
-											<SelectItem key={cat} value={cat}>
-												{cat}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-								{errors.category && <p className="text-red-500 mt-1 text-sm">{errors.category.message}</p>}
-							</div>
-						)}
-					/>
+					<div className="flex items-center gap-4">
+						<Controller
+							name="category"
+							control={control}
+							render={({ field }) => (
+								<div className="w-full">
+									<Select value={field.value} onValueChange={field.onChange}>
+										<SelectTrigger>
+											<SelectValue placeholder="Select Category" />
+										</SelectTrigger>
+										<SelectContent>
+											{categories.map((cat) => (
+												<SelectItem key={cat} value={cat}>
+													{cat}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+									{errors.category && <p className="text-red-500 mt-1 text-sm">{errors.category.message}</p>}
+								</div>
+							)}
+						/>
+						<Dialog open={newCategory.isOpen} onOpenChange={(isOpen) => setNewCategory((prev) => ({ ...prev, isOpen }))}>
+							<DialogTrigger asChild>
+								<Button variant="outline" className="">
+									Add Category
+								</Button>
+							</DialogTrigger>
+
+							<DialogContent>
+								<DialogHeader>
+									<DialogTitle>Add a New Category</DialogTitle>
+									<DialogDescription>Fill out the form below to add a new category to your collection.</DialogDescription>
+								</DialogHeader>
+								<div className="flex flex-row gap-2">
+									<Input
+										value={newCategory.name}
+										onChange={(e) =>
+											setNewCategory((prev) => ({
+												...prev,
+												name: e.target.value,
+												error: '',
+											}))
+										}
+										placeholder="Category Name"
+									/>
+									<Button
+										onClick={() => {
+											if (newCategory.name.trim() === '') {
+												setNewCategory((prev) => ({
+													...prev,
+													error: 'Category name cannot be empty',
+												}));
+											} else {
+												setCategories((prev) => [...prev, newCategory.name.trim()]);
+												setNewCategory({
+													name: '',
+													error: '',
+													isOpen: false,
+												});
+											}
+										}}>
+										Add Category
+									</Button>
+								</div>
+								{newCategory.error && <p className="text-red-500 mt-1 text-sm">{newCategory.error}</p>}
+							</DialogContent>
+						</Dialog>
+					</div>
 
 					<Controller
 						name="weeklyHydration"
