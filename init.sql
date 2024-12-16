@@ -6,6 +6,11 @@ CREATE TABLE plants.species (
 	name VARCHAR(100) NOT NULL UNIQUE
 );
 
+CREATE TABLE plants.categories (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL UNIQUE
+);
+
 CREATE TABLE plants.position_in_house (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(100) NOT NULL UNIQUE
@@ -27,10 +32,12 @@ CREATE TABLE plants.plants (
 	image_url VARCHAR NOT NULL,
 	sanity plants.sanity NOT NULL,
 	weekly_hydration INTEGER NOT NULL,
+	categories_id INTEGER NOT NULL,
 	commentary TEXT
 );
 
 ALTER TABLE plants.plants ADD CONSTRAINT fk_species_id FOREIGN KEY (species_id) REFERENCES plants.species(id);
+ALTER TABLE plants.plants ADD CONSTRAINT fk_categories_id FOREIGN KEY (categories_id) REFERENCES plants.categories(id);
 ALTER TABLE plants.plants ADD CONSTRAINT fk_position_in_house_id FOREIGN KEY (position_in_house_id) REFERENCES plants.position_in_house(id);
 
 CREATE FUNCTION plants.add_plant(
@@ -40,14 +47,17 @@ CREATE FUNCTION plants.add_plant(
 	_birthdate DATE,
 	_image_url VARCHAR(255),
 	_weekly_hydration INTEGER,
-	_commentary TEXT
+	_commentary TEXT,
+	_categories VARCHAR(100)
 ) RETURNS VOID AS $$
 BEGIN
 	INSERT INTO plants.species (name) VALUES (_species) ON CONFLICT DO NOTHING;
+	INSERT INTO plants.categories (name) VALUES (_categories) ON CONFLICT DO NOTHING;
 	INSERT INTO plants.position_in_house (name) VALUES (_position_in_house) ON CONFLICT DO NOTHING;
-	INSERT INTO plants.plants (name, species_id, position_in_house_id, birthdate, image_url, weekly_hydration, commentary, sanity) VALUES (
+	INSERT INTO plants.plants (name, species_id, categories_id, position_in_house_id, birthdate, image_url, weekly_hydration, commentary, sanity) VALUES (
 		_name,
 		(SELECT id FROM plants.species WHERE name = _species),
+		(SELECT id FROM plants.categories WHERE name = _categories),
 		(SELECT id FROM plants.position_in_house WHERE name = _position_in_house),
 		_birthdate,
 		_image_url,
@@ -63,6 +73,7 @@ SELECT
 	p.id,
 	p.name,
 	s.name AS species,
+	c.name AS categories,
 	pos.name AS position_in_house,
 	AGE(p.birthdate) AS age,
 	p.image_url,
@@ -74,6 +85,10 @@ JOIN
 	plants.species s
 ON
 	p.species_id = s.id
+JOIN
+	plants.categories c
+ON
+	p.categories_id = c.id
 JOIN
 	plants.position_in_house pos
 ON
@@ -91,6 +106,8 @@ GRANT INSERT, SELECT ON plants.plants TO web_anon;
 GRANT USAGE ON SEQUENCE plants.plants_id_seq TO web_anon;
 GRANT INSERT, SELECT ON plants.species TO web_anon;
 GRANT USAGE ON SEQUENCE plants.species_id_seq TO web_anon;
+GRANT INSERT, SELECT ON plants.categories TO web_anon;
+GRANT USAGE ON SEQUENCE plants.categories_id_seq TO web_anon;
 GRANT INSERT, SELECT ON plants.position_in_house TO web_anon;
 GRANT USAGE ON SEQUENCE plants.position_in_house_id_seq TO web_anon;
 

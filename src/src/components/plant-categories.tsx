@@ -17,7 +17,7 @@ export function PlantCategories({ plantCategories, selectedCategory, onSelectCat
 				All Plants
 			</Button>
 			{plantCategories.map((category) => (
-				<Button key={category.id} variant="ghost" size="sm" onClick={() => onSelectCategory(category.id)} className={cn('whitespace-nowrap', selectedCategory === category.id && 'bg-primary hover:text-white/90 text-primary-foreground hover:bg-primary/90')}>
+				<Button key={category.id} variant="ghost" size="sm" onClick={() => onSelectCategory(category.name)} className={cn('whitespace-nowrap', selectedCategory === category.name && 'bg-primary hover:text-white/90 text-primary-foreground hover:bg-primary/90')}>
 					{category.name}
 				</Button>
 			))}
