@@ -2,7 +2,7 @@ import { Category } from '@/types/categories';
 
 export async function getCategories(): Promise<Category[]> {
 	try {
-		const response = await fetch('http://postg-rest:3000/species', {
+		const response = await fetch('http://postg-rest:3000/categories', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
