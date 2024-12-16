@@ -46,18 +46,18 @@ export function PlantCard({ plant }: PlantCardProps) {
 						</div>
 						<div className="flex items-center gap-2 text-sm">
 							<Droplet className="h-4 w-4 text-primary" />
-							<span>{plant.wateringFrequency}</span>
+							<span>{plant.weeklyHydration}</span>
 						</div>
 					</div>
 					<div>
 						<div className="flex items-center gap-2 text-sm">
 							<Sprout className="h-4 w-4 text-primary" />
-							<span>{plant.category}</span>
+							<span>{plant.species}</span>
 						</div>
 					</div>
 				</div>
 
-				{plant.notes && <p className="mt-2 text-sm text-muted-foreground">{plant.notes}</p>}
+				{plant.commentary && <p className="mt-2 text-sm text-muted-foreground">{plant.commentary}</p>}
 			</CardContent>
 		</Card>
 	);
