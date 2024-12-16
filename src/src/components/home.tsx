@@ -3,18 +3,18 @@
 import { useState } from 'react';
 import { Plant } from '@/types/plant';
 import { Search } from '@/components/ui/search';
-import { Leaf, Plus, Filter } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Leaf } from 'lucide-react';
 import { PlantCategories } from '@/components/plant-categories';
 import { PlantCollection } from '@/components/plant-collection';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Category } from '@/types/categories';
+import { CreatePlantDialog } from './forms/CreatePlant';
 
 export default function HomePage({ plants, plantCategories }: { plants: Plant[]; plantCategories: Category[] }) {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-	const filteredPlants = plants.filter((plant) => (selectedCategory === 'all' || plant.category === selectedCategory) && (plant.name.toLowerCase().includes(searchQuery.toLowerCase()) || plant.species.toLowerCase().includes(searchQuery.toLowerCase())));
+	const filteredPlants = plants.filter((plant) => (selectedCategory === 'all' || plant.species === selectedCategory) && (plant.name.toLowerCase().includes(searchQuery.toLowerCase()) || plant.species.toLowerCase().includes(searchQuery.toLowerCase())));
 
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-secondary/50 to-background">
@@ -41,10 +41,7 @@ export default function HomePage({ plants, plantCategories }: { plants: Plant[];
 					<div className="w-full sm:w-72">
 						<Search value={searchQuery} onChange={setSearchQuery} />
 					</div>
-					<Button className="flex items-center gap-2 rounded-full bg-primary">
-						<Plus className="h-4 w-4" />
-						Add New Plant
-					</Button>
+					<CreatePlantDialog onCreate={(plant) => console.log(plant)} categories={plantCategories.map((category) => category.name)} />
 				</div>
 
 				<PlantCategories plantCategories={plantCategories} selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
