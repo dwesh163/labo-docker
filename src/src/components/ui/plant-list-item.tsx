@@ -33,14 +33,8 @@ export function PlantListItem({ plant }: PlantListItemProps) {
 						</div>
 						<div className="flex items-center gap-2 text-sm">
 							<Droplet className="h-4 w-4 text-primary" />
-							<span>{plant.wateringFrequency}</span>
+							<span>{plant.weeklyHydration}</span>
 						</div>
-						{plant.lastWatered && (
-							<div className="flex items-center gap-2 text-sm">
-								<Calendar className="h-4 w-4 text-primary" />
-								<span>{format(new Date(plant.lastWatered), 'PP')}</span>
-							</div>
-						)}
 					</div>
 				</div>
 				<DropdownMenu>

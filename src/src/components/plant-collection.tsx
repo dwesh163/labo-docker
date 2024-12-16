@@ -30,8 +30,8 @@ export function PlantCollection({ plants, view, emptyState }: PlantCollectionPro
 	if (view === 'list') {
 		return (
 			<div className="space-y-4">
-				{plants.map((plant) => (
-					<PlantListItem key={plant.id} plant={plant} />
+				{plants.map((plant, index) => (
+					<PlantListItem key={index} plant={plant} />
 				))}
 			</div>
 		);
@@ -39,8 +39,8 @@ export function PlantCollection({ plants, view, emptyState }: PlantCollectionPro
 
 	return (
 		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-			{plants.map((plant) => (
-				<PlantCard key={plant.id} plant={plant} />
+			{plants.map((plant, index) => (
+				<PlantCard key={index} plant={plant} />
 			))}
 		</div>
 	);
