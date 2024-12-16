@@ -75,6 +75,7 @@ export async function getPlants(): Promise<Plant[]> {
 		return plants.map((plant: any) => ({
 			name: plant.name,
 			species: plant.species,
+			category: plant.categories,
 			image: plant.image_url,
 			location: plant.position_in_house,
 			weeklyHydration: plant.weekly_hydration,
@@ -97,6 +98,7 @@ export async function createPlant(plant: Plant): Promise<ErrorType> {
 			body: JSON.stringify({
 				_name: plant.name,
 				_species: plant.species,
+				_categories: plant.category,
 				_position_in_house: plant.location,
 				_birthdate: plant.birthdate,
 				_image_url: plant.image,
