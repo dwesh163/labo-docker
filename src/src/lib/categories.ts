@@ -2,17 +2,30 @@ import { Category } from '@/types/categories';
 
 export async function getCategories(): Promise<Category[]> {
 	try {
-		const categories: Category[] = [
-			{ id: 'tropical', name: 'Tropical' },
-			{ id: 'succulent', name: 'Succulent' },
-			{ id: 'herb', name: 'Herb' },
-			{ id: 'flowering', name: 'Flowering' },
-			{ id: 'foliage', name: 'Foliage' },
-		];
+		const response = await fetch('http://postg-rest:3000/species', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 
-		return categories;
+		if (!response.ok) {
+			let errorMessage = 'Unknown error';
+			try {
+				const errorData = await response.json();
+				errorMessage = errorData.message || JSON.stringify(errorData);
+			} catch {
+				errorMessage = response.statusText;
+			}
+
+			console.error(`Error fetching categories: ${errorMessage}`);
+			return [];
+		}
+
+		const categories = await response.json();
+		return Array.isArray(categories) ? categories : [];
 	} catch (error) {
-		console.error('Error fetching categories', error);
+		console.error('Error fetching categories:', error);
 		return [];
 	}
 }
