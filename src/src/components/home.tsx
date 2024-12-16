@@ -14,7 +14,7 @@ export default function HomePage({ plants, plantCategories }: { plants: Plant[];
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-	const filteredPlants = plants.filter((plant) => (selectedCategory === 'all' || plant.species === selectedCategory) && (plant.name.toLowerCase().includes(searchQuery.toLowerCase()) || plant.species.toLowerCase().includes(searchQuery.toLowerCase())));
+	const filteredPlants = plants.filter((plant) => (selectedCategory === 'all' || plant.category === selectedCategory) && (plant.name.toLowerCase().includes(searchQuery.toLowerCase()) || plant.species.toLowerCase().includes(searchQuery.toLowerCase())));
 
 	return (
 		<div className="min-h-screen bg-gradient-to-b from-secondary/50 to-background">
