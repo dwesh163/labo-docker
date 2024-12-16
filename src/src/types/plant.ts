@@ -5,7 +5,8 @@ export interface Plant {
 	species: string;
 	image: string;
 	location: string;
-	birthdate: string;
+	age?: string;
+	birthdate?: string;
 	commentary?: string;
 	category: string;
 	weeklyHydration: number;
@@ -19,7 +20,7 @@ export const plantSchema = z.object({
 	image: z.string().url(),
 	birthdate: z.string().min(1, 'Birthdate is required'),
 	category: z.string().min(1, 'Category is required'),
-	weeklyHydration: z.string().min(1, 'Weekly Hydration is required'),
+	weeklyHydration: z.number().min(1, 'Weekly Hydration is required'),
 	commentary: z.string().optional(),
 });
 
