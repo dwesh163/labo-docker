@@ -23,16 +23,16 @@ services:
       context: .
       dockerfile: Dockerfiles/Dockerfile.postgrest
     image: my-postgrest
-    ports:
-      - 3000:3000
     depends_on:
       db:
         condition: service_healthy
 
-  adminer:
-    image: adminer
-    ports:
-      - 8080:8080
-    depends_on:
-      db:
-        condition: service_healthy
+  frontend:
+      build:
+        context: .
+        dockerfile: Dockerfiles/Dockerfile.front
+      image: my-frontend
+      ports:
+          - 80:3000
+      depends_on:
+        - postg-rest
