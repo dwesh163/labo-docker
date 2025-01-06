@@ -27,7 +27,7 @@ Une application web simple pour vous aider à prendre soin de vos plantes.
 
 ## À propos
 
-Home Botany est une application qui vous permet de prendre soin de vos plantes en toute simplicité. Elle offre une interface intuitive pour gérer votre collection de plantes et suivre leur évolution.
+Home Botany est une application qui vous permet de prendre soin de vos plantes en toute simplicité. Elle offre une interface intuitive pour gérer votre collection de plantes et suivre leur évolution. Créez par **Ehouarn Duriaux**, **Maggy Hofstetter** et **Abigaël Cornet**.
 
 ## Fonctionnalités
 
