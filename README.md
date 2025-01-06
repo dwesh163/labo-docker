@@ -57,13 +57,7 @@ git clone git@github.com:dwesh163/labo-docker.git
 cd labo-docker
 ```
 
-3. Copier le fichier `.env.example` en `.env` et le remplir :
-
-```bash
-cp .env.example .env
-sed -i '/POSTGRES_PASSWORD/d' .env
-echo "POSTGRES_PASSWORD=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" >> .env
-```
+3. Renommez le fichier .env.example en .env, puis éditez-le pour remplacer la valeur par défaut. Changez `POSTGRES_PASSWORD=XXXXX` en un mot de passe de votre choix, comme `POSTGRES_PASSWORD=123456`.
 
 4. Démarrez les conteneurs avec Docker Compose :
 
