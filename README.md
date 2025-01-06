@@ -8,7 +8,22 @@ Une application web simple pour vous aider à prendre soin de vos plantes.
 
 ## Table des matières
 
-[toc]
+-   [À propos](#à-propos)
+-   [Fonctionnalités](#fonctionnalités)
+-   [Installation](#installation)
+    -   [Prérequis](#prérequis)
+    -   [Étapes d'installation](#étapes-dinstallation)
+    -   [Commandes utiles](#commandes-utiles)
+-   [Environnements](#environnements)
+    -   [Développement](#développement)
+    -   [Production](#production)
+    -   [Différences principales](#différences-principales)
+-   [Architecture](#architecture)
+    -   [Technologies](#technologies)
+    -   [Structure du projet](#structure-du-projet)
+    -   [Configuration Docker](#configuration-docker)
+-   [Contribution](#contribution)
+-   [Captures d'écran](#captures-décran)
 
 ## À propos
 
