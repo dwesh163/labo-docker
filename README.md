@@ -137,7 +137,7 @@ L'environnement de production est conçu pour le déploiement :
 
     -   Base de données initialisée avec des données de test
     -   Persistance via des volumes Docker pour faciliter le développement
-    -   Interface [**Adminer**](http://localhost:8080) disponible pour gérer la base de données
+    -   Interface [Adminer](https://www.adminer.org/) disponible pour gérer la base de données
 
 -   _Production_
     -   Pas d'interface d'administration exposée
