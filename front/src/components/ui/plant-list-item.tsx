@@ -7,12 +7,37 @@ import { Droplet, MapPin, Calendar, MoreVertical } from 'lucide-react';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useRouter } from 'next/navigation';
 
 interface PlantListItemProps {
 	plant: Plant;
 }
 
 export function PlantListItem({ plant }: PlantListItemProps) {
+	const router = useRouter();
+
+	const deletePlant = async (plantId: string) => {
+		try {
+			const response = await fetch(`/api/plant/${plantId}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				const data = await response.json();
+				console.error('Error deleting plant:', data);
+				alert('Error deleting plant');
+			}
+
+			router.refresh();
+		} catch (error) {
+			console.error('Network or other error:', error);
+			alert('Error deleting plant');
+		}
+	};
+
 	return (
 		<Card className="flex overflow-hidden transition-all duration-300 hover:shadow-lg">
 			<div className="relative h-32 w-32 flex-shrink-0">
@@ -44,7 +69,11 @@ export function PlantListItem({ plant }: PlantListItemProps) {
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuItem className="text-destructive">Delete Plant</DropdownMenuItem>
+						<DropdownMenuItem className="text-destructive">
+							<Button variant={'ghost'} onClick={() => deletePlant(plant.id as string)}>
+								Delete Plant
+							</Button>
+						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>

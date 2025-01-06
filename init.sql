@@ -102,7 +102,7 @@ GRANT web_anon TO authenticator;
 GRANT USAGE ON SCHEMA plants TO web_anon;
 GRANT SELECT ON plants.get_plants TO web_anon;
 GRANT EXECUTE ON FUNCTION plants.add_plant TO web_anon;
-GRANT INSERT, SELECT ON plants.plants TO web_anon;
+GRANT INSERT, SELECT, DELETE ON plants.plants TO web_anon;
 GRANT USAGE ON SEQUENCE plants.plants_id_seq TO web_anon;
 GRANT INSERT, SELECT ON plants.species TO web_anon;
 GRANT USAGE ON SEQUENCE plants.species_id_seq TO web_anon;

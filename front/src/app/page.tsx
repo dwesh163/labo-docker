@@ -1,5 +1,4 @@
 'use server';
-
 import { Plant } from '@/types/plant';
 import HomePage from '@/components/home';
 import { getPlants } from '@/lib/plants';
