@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: Dockerfiles/Dockerfile.postgres
     image: home-botany-postgres
+    container_name: home-botany-postgres
     shm_size: 128mb
     volumes:
       - "./db-data:/var/lib/postgresql/data"
@@ -21,6 +22,7 @@ services:
       context: .
       dockerfile: Dockerfiles/Dockerfile.postgrest
     image: home-botany-postgrest
+    container_name: home-botany-postgrest
     depends_on:
       db:
         condition: service_healthy
@@ -30,6 +32,7 @@ services:
       context: .
       dockerfile: Dockerfiles/Dockerfile.front
     image: home-botany-frontend
+    container_name: home-botany-frontend
     ports:
         - 80:3000
     depends_on:
