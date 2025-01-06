@@ -71,6 +71,8 @@ echo "POSTGRES_PASSWORD=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" >> .env
 docker compose -f docker-compose.prod.yml up -d
 ```
 
+Soyez conscient que cela peut prendre un certain temps avant que l'application ne soit pleinement opérationnelle.
+
 5. Accédez à l'application :
 
 ```
