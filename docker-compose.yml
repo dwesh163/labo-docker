@@ -4,6 +4,7 @@ services:
   db:
     image: postgres:17.2-bookworm
     shm_size: 128mb
+    container_name: home-botany-dev-postgres
     volumes:
       - "./db-dev-data:/var/lib/postgresql/data"
       - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
@@ -19,6 +20,7 @@ services:
 
   postg-rest:
     image: postgrest/postgrest:v12.0.3
+    container_name: home-botany-dev-postgrest
     volumes:
       - "./postgrest.conf:/etc/postgrest.conf"
     ports:
@@ -30,6 +32,7 @@ services:
 
   adminer:
     image: adminer
+    container_name: home-botany-dev-adminer
     ports:
       - 8080:8080
     depends_on:
@@ -37,14 +40,15 @@ services:
         condition: service_healthy
 
   frontend:
-      image: node:22
-      working_dir: /app
-      command: sh -c "npm install --legacy-peer-deps 2>/dev/null && npm run dev"
-      ports:
-          - 80:3000
-      volumes:
-          - ./front:/app
-      environment:
-          NODE_ENV: development
-      depends_on:
-        - postg-rest
+    image: node:22
+    container_name: home-botany-dev-frontend
+    working_dir: /app
+    command: sh -c "npm install --legacy-peer-deps 2>/dev/null && npm run dev"
+    ports:
+        - 80:3000
+    volumes:
+        - ./front:/app
+    environment:
+        NODE_ENV: development
+    depends_on:
+      - postg-rest
