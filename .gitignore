@@ -1,3 +1,4 @@
 .env
 /db-dev-data
 /db-data
+*.swp
