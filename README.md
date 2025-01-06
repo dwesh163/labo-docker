@@ -163,9 +163,7 @@ L'environnement de production est conçu pour le déploiement :
 
 -   _Développement_
 
-    -   Hot-reloading activé
-    -   Source maps générées
-    -   Reconstruction automatique à chaque modification
+    -   Hot-reloading activé avec intégration en temps réel des modifications grâce aux volumes montés.
 
 -   _Production_
     -   Build optimisé et minifié
