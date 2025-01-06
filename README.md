@@ -27,7 +27,7 @@ Une application web simple pour vous aider à prendre soin de vos plantes.
 
 ## À propos
 
-Home Botany est une application qui vous permet de prendre soin de vos plantes en toute simplicité. Elle offre une interface intuitive pour gérer votre collection de plantes et suivre leur évolution.
+Home Botany est une application qui vous permet de prendre soin de vos plantes en toute simplicité. Elle offre une interface intuitive pour gérer votre collection de plantes et suivre leur évolution. Créez par **Ehouarn Duriaux**, **Maggy Hofstetter** et **Abigaël Cornet**.
 
 ## Fonctionnalités
 
@@ -57,16 +57,26 @@ git clone git@github.com:dwesh163/labo-docker.git
 cd labo-docker
 ```
 
-3. Démarrez les conteneurs avec Docker Compose :
+3. Copier le fichier `.env.example` en `.env` et le remplir :
 
 ```bash
-docker compose up -d --build
+cp .env.example .env
+sed -i '/POSTGRES_PASSWORD/d' .env
+echo "POSTGRES_PASSWORD=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" >> .env
 ```
 
-4. Accédez à l'application :
+4. Démarrez les conteneurs avec Docker Compose :
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Soyez conscient que cela peut prendre un certain temps avant que l'application ne soit pleinement opérationnelle.
+
+5. Accédez à l'application :
 
 ```
-http://localhost
+http://localhost:80
 ```
 
 ### Commandes utiles
@@ -127,7 +137,7 @@ L'environnement de production est conçu pour le déploiement :
 
     -   Base de données initialisée avec des données de test
     -   Persistance via des volumes Docker pour faciliter le développement
-    -   Interface [**Adminer**](http://localhost:8080) disponible pour gérer la base de données
+    -   Interface [Adminer](https://www.adminer.org/) disponible pour gérer la base de données
 
 -   _Production_
     -   Pas d'interface d'administration exposée
@@ -209,15 +219,16 @@ L'environnement de production est conçu pour le déploiement :
 
 **Production** (docker-compose.prod.yml)
 
--   **Frontend** : Build multi-étapes avec Node.js
--   **Base de données** : PostgreSQL avec initialisation personnalisée
--   **API** : PostgREST avec configuration optimisée
+-   **Frontend** : Build multi-étapes avec Node.js `Port 80`
+-   **Base de données** : PostgreSQL avec initialisation personnalisée `Port 5432 (pas exposé)`
+-   **API** : PostgREST avec configuration optimisée `Port 3000 (pas exposé)`
 
-**Développement** (docker-compose.yml)
+**Développement** `docker-compose.yml`
 
--   **Frontend** : Environnement Node.js avec volumes montés
--   **Base de données** : PostgreSQL avec persistence des données
--   **API** : PostgREST avec configuration de développement
+-   **Frontend** : Environnement Node.js avec volumes montés `Port 80`
+-   **Base de données** : PostgreSQL avec persistence des données `Port 5432`
+-   **Adminer** : Interface pour gérer la base de données `Port 8080`
+-   **API** : PostgREST avec configuration de développement `Port 3000`
 
 ## Contribution
 
