@@ -219,15 +219,16 @@ L'environnement de production est conçu pour le déploiement :
 
 **Production** (docker-compose.prod.yml)
 
--   **Frontend** : Build multi-étapes avec Node.js
--   **Base de données** : PostgreSQL avec initialisation personnalisée
--   **API** : PostgREST avec configuration optimisée
+-   **Frontend** : Build multi-étapes avec Node.js `Port 80`
+-   **Base de données** : PostgreSQL avec initialisation personnalisée `Port 5432 (pas exposé)`
+-   **API** : PostgREST avec configuration optimisée `Port 3000 (pas exposé)`
 
-**Développement** (docker-compose.yml)
+**Développement** `docker-compose.yml`
 
--   **Frontend** : Environnement Node.js avec volumes montés
--   **Base de données** : PostgreSQL avec persistence des données
--   **API** : PostgREST avec configuration de développement
+-   **Frontend** : Environnement Node.js avec volumes montés `Port 80`
+-   **Base de données** : PostgreSQL avec persistence des données `Port 5432`
+-   **Adminer** : Interface pour gérer la base de données `Port 8080`
+-   **API** : PostgREST avec configuration de développement `Port 3000`
 
 ## Contribution
 
