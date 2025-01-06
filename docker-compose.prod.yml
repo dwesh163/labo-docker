@@ -21,6 +21,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfiles/Dockerfile.postgrest
+    environment:
+      - PGRST_LOG_LEVEL=error
     image: home-botany-postgrest
     container_name: home-botany-postgrest
     depends_on:

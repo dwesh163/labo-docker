@@ -21,6 +21,8 @@ services:
     container_name: home-botany-dev-postgrest
     volumes:
       - "./postgrest.conf:/etc/postgrest.conf"
+    environment:
+      - PGRST_LOG_LEVEL=debug
     ports:
       - 3000:3000
     depends_on:
