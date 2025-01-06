@@ -76,7 +76,7 @@ Soyez conscient que cela peut prendre un certain temps avant que l'application n
 5. Accédez à l'application :
 
 ```
-http://localhost
+http://localhost:80
 ```
 
 ### Commandes utiles
