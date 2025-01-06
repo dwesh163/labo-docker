@@ -3,54 +3,6 @@ import { Plant } from '@/types/plant';
 
 export async function getPlants(): Promise<Plant[]> {
 	try {
-		// const plants: Plant[] = [
-		// 	{
-		// 		name: 'Monstera Deliciosa',
-		// 		species: 'Monstera',
-		// 		image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&q=80',
-		// 		location: 'Living Room',
-		// 		weeklyHydration: 1,
-		// 		birthdate: '2024-03-01',
-		// 		commentary: 'Thriving in bright indirect light',
-		// 		category: 'tropical',
-		// 		healthStatus: 'good',
-		// 	},
-		// 	{
-		// 		name: 'Peace Lily',
-		// 		species: 'Spathiphyllum',
-		// 		image: 'https://images.unsplash.com/photo-1521503862198-2ae9a997bbc9?auto=format&fit=crop&q=80',
-		// 		location: 'Bedroom',
-		// 		weeklyHydration: 2,
-		// 		birthdate: '2024-03-05',
-		// 		commentary: 'Droops when needs water',
-		// 		category: 'flowering',
-		// 		healthStatus: 'bad',
-		// 	},
-		// 	{
-		// 		name: 'Snake Plant',
-		// 		species: 'Sansevieria',
-		// 		image: 'https://images.unsplash.com/photo-1572688484438-313a6e50c333?auto=format&fit=crop&q=80',
-		// 		location: 'Study',
-		// 		weeklyHydration: 0.5,
-		// 		birthdate: '2024-03-10',
-		// 		commentary: 'Low maintenance, perfect for low light',
-		// 		category: 'succulent',
-		// 		healthStatus: 'ugly',
-		// 	},
-		// 	{
-		// 		name: 'Fiddle Leaf Fig',
-		// 		species: 'Ficus lyrata',
-		// 		image: 'https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&q=80',
-		// 		location: 'Living Room',
-		// 		weeklyHydration: 1,
-		// 		birthdate: '2024-03-15',
-		// 		commentary: 'Sensitive to changes in environment',
-		// 		category: 'foliage',
-		// 		healthStatus: 'dead',
-		// 	},
-		// ];
-		// return plants;
-
 		const response = await fetch('http://postg-rest:3000/get_plants', {
 			method: 'GET',
 			headers: {
@@ -73,6 +25,7 @@ export async function getPlants(): Promise<Plant[]> {
 
 		const plants = await response.json();
 		return plants.map((plant: any) => ({
+			id: plant.id,
 			name: plant.name,
 			species: plant.species,
 			category: plant.categories,
@@ -125,6 +78,44 @@ export async function createPlant(plant: Plant): Promise<ErrorType> {
 		console.error('Network or other error:', error);
 		return {
 			error: 'Server error',
+			status: 500,
+		};
+	}
+}
+
+export async function deletePlant(plantId: string): Promise<ErrorType> {
+	try {
+		const response = await fetch(`http://postg-rest:3000/plants?id=eq.${plantId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			let errorMessage = 'Unknown error';
+			try {
+				const errorData = await response.json();
+				errorMessage = errorData.message || JSON.stringify(errorData);
+			} catch {
+				errorMessage = response.statusText;
+			}
+
+			console.error(`Error deleting plant: ${errorMessage}`);
+			return {
+				error: errorMessage,
+				status: response.status,
+			};
+		}
+
+		return {
+			error: '',
+			status: 200,
+		};
+	} catch (error) {
+		console.error('Network or other error:', error);
+		return {
+			error: 'Network or server error',
 			status: 500,
 		};
 	}

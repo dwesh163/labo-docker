@@ -5,10 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { z } from 'zod';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { PlantFormValues, plantSchema } from '@/types/plant';
+import { useRouter } from 'next/navigation';
 
 export function CreatePlantDialog({ categoriesData }: { categoriesData: string[] }) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +37,8 @@ export function CreatePlantDialog({ categoriesData }: { categoriesData: string[]
 		},
 	});
 
+	const router = useRouter();
+
 	const onSubmit = (data: PlantFormValues) => {
 		fetch('/api/plant', {
 			method: 'POST',
@@ -50,6 +52,7 @@ export function CreatePlantDialog({ categoriesData }: { categoriesData: string[]
 				if (!plant.error) {
 					setIsOpen(false);
 					reset();
+					router.refresh();
 				}
 			});
 	};

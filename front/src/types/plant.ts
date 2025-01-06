@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export interface Plant {
+	id?: string;
 	name: string;
 	species: string;
 	image: string;

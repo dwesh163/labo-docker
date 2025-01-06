@@ -3,16 +3,39 @@
 import { Plant } from '@/types/plant';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Droplet, MapPin, Calendar, MoreVertical, Sprout } from 'lucide-react';
-import { format } from 'date-fns';
-import { Badge } from '@/components/ui/badge';
+import { Droplet, MapPin, MoreVertical, Sprout } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useRouter } from 'next/navigation';
 
 interface PlantCardProps {
 	plant: Plant;
 }
 
 export function PlantCard({ plant }: PlantCardProps) {
+	const router = useRouter();
+
+	const deletePlant = async (plantId: string) => {
+		try {
+			const response = await fetch(`/api/plant/${plantId}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				const data = await response.json();
+				console.error('Error deleting plant:', data);
+				alert('Error deleting plant');
+			}
+
+			router.refresh();
+		} catch (error) {
+			console.error('Network or other error:', error);
+			alert('Error deleting plant');
+		}
+	};
+
 	return (
 		<Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg">
 			<div className="relative aspect-square overflow-hidden">
@@ -26,7 +49,11 @@ export function PlantCard({ plant }: PlantCardProps) {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuItem className="text-destructive">Delete Plant</DropdownMenuItem>
+							<DropdownMenuItem className="text-destructive">
+								<Button variant={'ghost'} onClick={() => deletePlant(plant.id as string)}>
+									Delete Plant
+								</Button>
+							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>

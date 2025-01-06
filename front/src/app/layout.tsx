@@ -1,4 +1,5 @@
 import './globals.css';
+export const dynamic = 'auto';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
