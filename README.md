@@ -57,13 +57,21 @@ git clone git@github.com:dwesh163/labo-docker.git
 cd labo-docker
 ```
 
-3. Démarrez les conteneurs avec Docker Compose :
+3. Copier le fichier `.env.example` en `.env` et le remplir :
+
+```bash
+cp .env.example .env
+sed -i '/POSTGRES_PASSWORD/d' .env
+echo "POSTGRES_PASSWORD=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 32)" >> .env
+```
+
+4. Démarrez les conteneurs avec Docker Compose :
 
 ```bash
 docker compose up -d --build
 ```
 
-4. Accédez à l'application :
+5. Accédez à l'application :
 
 ```
 http://localhost
